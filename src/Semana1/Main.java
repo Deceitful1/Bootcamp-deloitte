@@ -58,7 +58,7 @@ public class Main {
                     System.out.println("Idade:");
                     int idade = sc.nextInt();
 
-                    cliente = new Cliente(cpf,nome,senha,email,endereco,idade);
+                    cliente = new Cliente(cpf,nome,endereco,senha,email,idade);
                     clientes.add(cliente);
 
 
