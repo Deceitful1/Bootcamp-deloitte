@@ -138,8 +138,9 @@ sc.nextLine();
                     cpf = sc.nextLine();
 
                     //remover cliente por cpf
-                    clientes.removeIf(x -> x.getCpf() == cpf);
-                    if (cpf == cliente.getCpf())
+                    clientes.removeIf(x -> x.getCpf().equals(cpf));
+                    System.out.println(cliente);
+                    if (cpf.equals(cliente.getCpf()))
                     {
                         cliente = null;
                     }
