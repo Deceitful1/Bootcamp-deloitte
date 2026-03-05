@@ -1,10 +1,9 @@
 package Semana1;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Main
+{
 
     public static void main(String[] args)
     {
@@ -13,13 +12,14 @@ public class Main {
         boolean isDone = true;
 
         Scanner sc = new Scanner(System.in);
-        Cliente cliente = null;
-        List<Cliente> clientes = new ArrayList<>();
+        Cliente cliente = new Cliente();
 
 
         System.out.println("Bem vindo a loja x!");
-        while(isDone)
-        {
+        while (isDone) {
+
+            System.out.println(cliente.clientes);
+
 
             System.out.println("O que gostaria de saber?");
 
@@ -34,118 +34,24 @@ public class Main {
 
             int option = sc.nextInt();
 
-            switch (option)
-            {
+            switch (option) {
                 case 1:
-                    System.out.println("Insira suas informações:");
-                    sc.nextLine();
-
-                    System.out.println("Cpf:");
-                    String cpf = sc.nextLine();
-
-                    System.out.println("Nome:");
-                    String nome = sc.nextLine();
-
-                    System.out.println("Email:");
-                    String email = sc.nextLine();
-
-                    System.out.println("Senha:");
-                    String senha = sc.nextLine();
-
-                    System.out.println("Endereço:");
-                    String endereco = sc.nextLine();
-
-                    System.out.println("Idade:");
-                    int idade = sc.nextInt();
-
-                    cliente = new Cliente(cpf,nome,endereco,senha,email,idade);
-                    clientes.add(cliente);
-
-
-
-                    System.out.println("Cliente cadastrado!");
-                    sc.nextLine();
-
-                    System.out.println("----------------------------------------------------------------");
+                    cliente.cadastro();
 
                     break;
 
-                    case 2:
-                        if (cliente == null)
-                        {
-                            throw new RuntimeException("Erro: precisa estar logado para alterar suas informações.");
-                        }
-
-                        System.out.println(cliente);
-                        System.out.println("qual informação você deseja alterar? insira o nome do campo");
-                        sc.nextLine();
-
-                        String resposta = sc.nextLine();
-
-                        switch (resposta)
-                        {
-                            case "nome":
-
-                                sc.nextLine();
-                                System.out.println("Digite o novo nome:");
-                                cliente.setNome(sc.nextLine());
-
-                                break;
-                            case "endereco":
-                                sc.nextLine();
-                                System.out.println("Digite seu novo endereço:");
-                                cliente.setEndereco(sc.nextLine());
-
-
-                                break;
-                            case "email":
-                                sc.nextLine();
-                                System.out.println("Digite seu novo email:");
-                                cliente.setEmail(sc.nextLine());
-
-
-                            case "senha":
-                                sc.nextLine();
-                                System.out.println("Digite sua nova senha:");
-                                cliente.setSenha(sc.nextLine());
-
-
-                                break;
-                             default:
-                                 break;
-
-
-                        }
-
+                case 2:
+                    cliente.atualizarCadastro();
                     break;
                 case 3:
-                    if (cliente == null)
-                    {
-                        throw new RuntimeException("Erro: precisa estar logado para alterar suas informações.");
-                    }
-                    System.out.println(cliente);
+                    System.out.println(cliente.consultar());
                     sc.nextLine();
 
                     break;
                 case 4:
-if (clientes.isEmpty())
-{
-    throw new RuntimeException("nenhum cliente cadastrado.");
-}
+                    cliente.deletar();
 
-sc.nextLine();
-                    System.out.println("Insira o cpf");
-                    cpf = sc.nextLine();
 
-                    //remover cliente por cpf
-                    clientes.removeIf(x -> x.getCpf().equals(cpf));
-                    System.out.println(cliente);
-                    if (cpf.equals(cliente.getCpf()))
-                    {
-                        cliente = null;
-                    }
-
-                    System.out.println("Cliente apagado do banco de dados.");
                     break;
                 case 5:
                     System.out.println("Obrigado. volte sempre!");
@@ -158,5 +64,4 @@ sc.nextLine();
         }
 
     }
-
 }
