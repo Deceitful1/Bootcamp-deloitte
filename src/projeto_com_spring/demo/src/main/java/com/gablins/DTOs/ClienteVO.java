@@ -3,12 +3,13 @@ package com.gablins.DTOs;
 import Semana1.exceptions.InvalidCPFFormatException;
 import Semana1.exceptions.InvalidEmailFormatException;
 import com.gablins.entities.Cliente;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ClienteVO
+public class ClienteVO extends RepresentationModel<ClienteVO>
 {
 
     private Long id;
