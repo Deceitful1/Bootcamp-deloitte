@@ -99,43 +99,11 @@ public class Cliente
         this.id = id;
     }
 
-    //Converter VO para object
-    public static Cliente VOToObject(ClienteVO clienteVO)
-    {
-        return new Cliente(clienteVO.getCpf(), clienteVO.getNome(), clienteVO.getEndereco(), clienteVO.getSenha(), clienteVO.getEmail());
-    }
-    public static List<Cliente> VOToOjectList(List<ClienteVO> clientesVO)
-    {
-        List<Cliente> clientes = new ArrayList<>();
-        for(ClienteVO clienteVO : clientesVO)
-        {
-            clientes.add(VOToObject(clienteVO));
-        }
-        return clientes;
-    }
 
 
 
 
-    public boolean validateCPF(String cpf)
-    {
 
-        if (!cpf.matches("\\d{11}")) {
-            throw new InvalidCPFFormatException("CPF invalido!");
-
-        }
-
-        return true;
-    }
-
-    public boolean validateEmail(String email)
-    {
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        if (!email.matches(regex)) {
-            throw new InvalidEmailFormatException("Formato de email inválido!");
-        }
-        return true;
-    }
 
 
     @Override

@@ -1,6 +1,8 @@
 package com.gablins.services;
 
 import com.gablins.DTOs.ClienteVO;
+import com.gablins.DTOs.mapper.ClientVOToEntityMapper;
+import com.gablins.entities.ClientVOMapper;
 import com.gablins.entities.Cliente;
 import com.gablins.repositories.ClienteRepository;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +32,7 @@ class ClienteServiceTest
     @Test
     void findAll()
     {
-        List<Cliente> clientes = Cliente.VOToOjectList(mockClientList(5));
+        List<Cliente> clientes = ClientVOToEntityMapper.VOToOjectList(mockClientList(5));
 
 
         when(clienteRepository.findAll()).thenReturn(clientes);
@@ -53,7 +55,7 @@ class ClienteServiceTest
         Cliente cliente = mockClient();
         when(clienteRepository.save(cliente)).thenReturn(mockClient());
         var cliente1 = clienteRepository.save(cliente);
-        var data = ClienteVO.toVO(cliente1);
+        var data = ClientVOMapper.toVO(cliente1);
 
 
         assertNotNull(data);
@@ -73,9 +75,9 @@ class ClienteServiceTest
     void findById()
     {
         ClienteVO data = mockClientVO();
-        Cliente client = Cliente.VOToObject(data);
+        Cliente client = ClientVOToEntityMapper.VOToObject(data);
         when(clienteRepository.findById(data.getId())).thenReturn(Optional.of(client));
-        Assertions.assertEquals(ClienteVO.toVO(client), clienteService.findById(data.getId()));
+        Assertions.assertEquals(ClientVOMapper.toVO(client), clienteService.findById(data.getId()));
 
         ClienteService.addHateoasLinks(data);
         assertTrue(!data.getLinks().isEmpty());
@@ -97,7 +99,7 @@ class ClienteServiceTest
         updateObject.setId(1L);
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(data));
 
-        when(clienteRepository.save(data)).thenReturn(Cliente.VOToObject(updateObject));
+        when(clienteRepository.save(data)).thenReturn(ClientVOToEntityMapper.VOToObject(updateObject));
 
         var resultVO = clienteService.update(updateObject);
 
@@ -117,7 +119,7 @@ class ClienteServiceTest
     {
         ClienteVO data = mockClientVO();
         data.setId(1L);
-        when(clienteRepository.findById(1L)).thenReturn(Optional.of(Cliente.VOToObject(data)));
+        when(clienteRepository.findById(1L)).thenReturn(Optional.of(ClientVOToEntityMapper.VOToObject(data)));
 
         clienteService.delete(1L);
         verify(clienteRepository, times(1)).deleteById(1L);
@@ -129,13 +131,13 @@ class ClienteServiceTest
     {
         ClienteVO data = mockClientVO();
 
-        Cliente client = Cliente.VOToObject(data);
+        Cliente client = ClientVOToEntityMapper.VOToObject(data);
         when(clienteRepository.findByEmail(data.getEmail())).thenReturn(client);
         var result = clienteRepository.findByEmail(data.getEmail());
         Assertions.assertEquals(data.getEmail(), result.getEmail());
 
-        result = Cliente.VOToObject(ClienteVO.toVO(result));
-        var resultVo = ClienteVO.toVO(result);
+        result = ClientVOToEntityMapper.VOToObject(ClientVOMapper.toVO(result));
+        var resultVo = ClientVOMapper.toVO(result);
 
         Assertions.assertEquals(client, result);
 
@@ -151,13 +153,13 @@ class ClienteServiceTest
     {
         ClienteVO data = mockClientVO();
 
-        Cliente client = Cliente.VOToObject(data);
+        Cliente client = ClientVOToEntityMapper.VOToObject(data);
         when(clienteRepository.findByCpf(data.getCpf())).thenReturn(client);
         var result = clienteRepository.findByCpf(data.getCpf());
         Assertions.assertEquals(data.getCpf(), result.getCpf());
 
-        result = Cliente.VOToObject(ClienteVO.toVO(result));
-        var resultVo = ClienteVO.toVO(result);
+        result = ClientVOToEntityMapper.VOToObject(ClientVOMapper.toVO(result));
+        var resultVo = ClientVOMapper.toVO(result);
 
         Assertions.assertEquals(client, result);
 

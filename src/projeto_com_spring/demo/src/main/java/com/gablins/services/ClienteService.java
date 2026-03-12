@@ -1,7 +1,9 @@
 package com.gablins.services;
 
 import com.gablins.DTOs.ClienteVO;
+import com.gablins.DTOs.mapper.ClientVOToEntityMapper;
 import com.gablins.controllers.ClienteController;
+import com.gablins.entities.ClientVOMapper;
 import com.gablins.entities.Cliente;
 import com.gablins.exceptions.BadRequestException;
 import com.gablins.exceptions.ClienteNotFoundException;
@@ -23,7 +25,7 @@ public class ClienteService
     public List<ClienteVO> findAll()
     {
 
-        var resultList = ClienteVO.toVOList(clienteRepository.findAll());
+        var resultList = ClientVOMapper.toVOList(clienteRepository.findAll());
         for (ClienteVO result : resultList) {
             addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
         }
@@ -32,7 +34,7 @@ public class ClienteService
 
     public ClienteVO create(ClienteVO cliente)
     {
-        var objeto = Cliente.VOToObject(cliente);
+        var objeto = ClientVOToEntityMapper.VOToObject(cliente);
         if (clienteRepository.existsByCpf(objeto.getCpf())) {
             throw new BadRequestException("cpf já cadastrado no sistema.");
         }
@@ -41,7 +43,7 @@ public class ClienteService
         }
         Cliente client = clienteRepository.save(objeto);
 
-        var result = ClienteVO.toVO(client);
+        var result = ClientVOMapper.toVO(client);
         addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
         return result;
     }
@@ -50,7 +52,7 @@ public class ClienteService
     {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException("Cliente com id: " + id + " não encontrado")
         );
-        var result = ClienteVO.toVO(cliente);
+        var result = ClientVOMapper.toVO(cliente);
 
 
         addHateoasLinks(id, result.getCpf(), result.getEmail(), result);
@@ -65,9 +67,9 @@ public class ClienteService
         entity.setEmail(clienteAtualizado.getEmail());
         entity.setEndereco(clienteAtualizado.getEndereco());
         entity.setSenha(clienteAtualizado.getSenha());
-
         var result = clienteRepository.save(entity);
-        var result2 = ClienteVO.toVO(result);
+        var result2 = ClientVOMapper.toVO(result);
+
         addHateoasLinks(result2.getId(), result2.getCpf(), result2.getEmail(), result2);
         return result2;
     }
@@ -87,7 +89,7 @@ public class ClienteService
         }
         Cliente cliente = clienteRepository.findByEmail(email);
 
-        var result = ClienteVO.toVO(cliente);
+        var result = ClientVOMapper.toVO(cliente);
         addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
         return result;
     }
@@ -99,7 +101,7 @@ public class ClienteService
         }
         Cliente cliente = clienteRepository.findByCpf(cpf);
 
-        return ClienteVO.toVO(cliente);
+        return ClientVOMapper.toVO(cliente);
     }
 
 
