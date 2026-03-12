@@ -31,6 +31,13 @@ public class GlobalExceptionHandler
         CustomizedMessage customizedMessage = new CustomizedMessage(LocalDateTime.now().toString(),ex.getMessage(),HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(customizedMessage);
     }
+    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
+    public ResponseEntity<?> handleUnathorized(Exception ex)
+    {
+        CustomizedMessage customizedMessage = new CustomizedMessage(LocalDateTime.now().toString(),ex.getMessage(),HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(customizedMessage);
+    }
+
 
 
 
