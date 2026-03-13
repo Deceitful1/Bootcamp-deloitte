@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.gablins.entities.validator.ClienteDataValidator.validateCPF;
+import static com.gablins.entities.validator.ClienteDataValidator.validateEmail;
+
 public class ClienteVO extends RepresentationModel<ClienteVO>
 {
 
@@ -93,27 +96,11 @@ public class ClienteVO extends RepresentationModel<ClienteVO>
         this.email = email;
     }
 
-
-
-
-
-    //métodos para transformar as entidades em Value Objects
-    public static ClienteVO toVO(Cliente cliente)
-    {
-
-
-        return new ClienteVO(cliente.getId() ,cliente.getCpf(), cliente.getNome(), cliente.getEndereco(), cliente.getSenha(), cliente.getEmail());
+    public void setCpf(String cpf) {
+        validateCPF(cpf);
     }
 
-    public static List<ClienteVO> toVOList(List<Cliente> clientes)
-    {
-        List<ClienteVO> clientesList = new ArrayList<>();
-        for (Cliente cliente : clientes) {
-            clientesList.add(toVO(cliente));
-        }
-        return clientesList;
 
-    }
 
 
     @Override
@@ -133,26 +120,7 @@ public class ClienteVO extends RepresentationModel<ClienteVO>
     }
 
 
-//validação de dados confidenciais
-    public boolean validateCPF(String cpf)
-    {
 
-        if (!cpf.matches("\\d{11}")) {
-            throw new InvalidCPFFormatException("CPF invalido!");
-
-        }
-
-        return true;
-    }
-
-    public boolean validateEmail(String email)
-    {
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        if (!email.matches(regex)) {
-            throw new InvalidEmailFormatException("Formato de email inválido!");
-        }
-        return true;
-    }
 
 
 

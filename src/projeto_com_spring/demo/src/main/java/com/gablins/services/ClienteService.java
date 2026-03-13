@@ -1,47 +1,55 @@
 package com.gablins.services;
 
 import com.gablins.DTOs.ClienteVO;
-import com.gablins.controllers.ClienteController;
+import com.gablins.DTOs.mapper.ClientVOToEntityMapper;
+import com.gablins.entities.ClientVOMapper;
 import com.gablins.entities.Cliente;
-import com.gablins.exceptions.BadRequestException;
 import com.gablins.exceptions.ClienteNotFoundException;
 import com.gablins.repositories.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gablins.services.validator.ClienteServiceValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static com.gablins.services.hateoas.Hateoas.addHateoasLinks;
+import static com.gablins.services.hateoas.Hateoas.addHateoasLinksToList;
 
 @Service
 public class ClienteService
 {
-    @Autowired
-    private ClienteRepository clienteRepository;
+
+    private final ClienteRepository clienteRepository;
+    private final ClienteServiceValidator clienteServiceValidator;
+
+    public ClienteService(ClienteRepository clienteRepository, ClienteServiceValidator clienteServiceValidator)
+    {
+        this.clienteRepository = clienteRepository;
+        this.clienteServiceValidator = clienteServiceValidator;
+    }
 
     public List<ClienteVO> findAll()
     {
 
-        var resultList = ClienteVO.toVOList(clienteRepository.findAll());
-        for (ClienteVO result : resultList) {
-            addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
-        }
+        var resultList = ClientVOMapper.toVOList(clienteRepository.findAll());
+        addHateoasLinksToList(resultList);
+
         return resultList;
     }
 
     public ClienteVO create(ClienteVO cliente)
     {
-        var objeto = Cliente.VOToObject(cliente);
-        if (clienteRepository.existsByCpf(objeto.getCpf())) {
-            throw new BadRequestException("cpf já cadastrado no sistema.");
-        }
-        if (clienteRepository.existsByEmail(objeto.getEmail())) {
-            throw new BadRequestException("email já cadastrado no sistema.");
-        }
+
+        var objeto = ClientVOToEntityMapper.VOToObject(cliente);
+
+        //valida criação do objeto
+        clienteServiceValidator.validateCreate(objeto);
+
+        //salva o cliente no banco de dados
         Cliente client = clienteRepository.save(objeto);
 
-        var result = ClienteVO.toVO(client);
+        var result = ClientVOMapper.toVO(client);
+
+        //adiciona links hateoas no objeto
         addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
         return result;
     }
@@ -50,7 +58,7 @@ public class ClienteService
     {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException("Cliente com id: " + id + " não encontrado")
         );
-        var result = ClienteVO.toVO(cliente);
+        var result = ClientVOMapper.toVO(cliente);
 
 
         addHateoasLinks(id, result.getCpf(), result.getEmail(), result);
@@ -60,68 +68,44 @@ public class ClienteService
     public ClienteVO update(ClienteVO clienteAtualizado)
     {
 
+
         Cliente entity = clienteRepository.findById(clienteAtualizado.getId()).orElseThrow(() -> new ClienteNotFoundException("Cliente não encontrado."));
-        entity.setNome(clienteAtualizado.getNome());
-        entity.setEmail(clienteAtualizado.getEmail());
-        entity.setEndereco(clienteAtualizado.getEndereco());
-        entity.setSenha(clienteAtualizado.getSenha());
+        Update.updateClient(entity, clienteAtualizado);
 
         var result = clienteRepository.save(entity);
-        var result2 = ClienteVO.toVO(result);
+        var result2 = ClientVOMapper.toVO(result);
+
         addHateoasLinks(result2.getId(), result2.getCpf(), result2.getEmail(), result2);
         return result2;
     }
 
     public void delete(Long id)
     {
-        ClienteVO cliente = findById(id);
-
-        clienteRepository.deleteById(id);
+        if (!clienteRepository.existsById(id))
+        {
+            throw new ClienteNotFoundException("Cliente não encontrado");
+        }
+            clienteRepository.deleteById(id);
 
     }
 
     public ClienteVO findByEmail(String email)
     {
-        if (!clienteRepository.existsByEmail(email)) {
-            throw new ClienteNotFoundException("Cliente não encontrado.");
-        }
+        ClienteServiceValidator.existsByValidator.validateExistsByEmail(clienteRepository, email);
+
         Cliente cliente = clienteRepository.findByEmail(email);
 
-        var result = ClienteVO.toVO(cliente);
+        var result = ClientVOMapper.toVO(cliente);
         addHateoasLinks(result.getId(), result.getCpf(), result.getEmail(), result);
         return result;
     }
 
     public ClienteVO findByCpf(String cpf)
     {
-        if (!clienteRepository.existsByCpf(cpf)) {
-            throw new ClienteNotFoundException("Cpf não encontrado.");
-        }
+        ClienteServiceValidator.existsByValidator.validateExistsByCpf(clienteRepository, cpf);
         Cliente cliente = clienteRepository.findByCpf(cpf);
 
-        return ClienteVO.toVO(cliente);
-    }
-
-
-    public static void addHateoasLinks(Long id, String cpf, String email, ClienteVO result)
-    {
-        result.add(linkTo(methodOn(ClienteController.class).findById(id)).withRel("findById").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).findByCpf(cpf)).withRel("findByCpf").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).findByEmail(email)).withRel("findByEmail").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).delete(id)).withRel("delete").withType("DELETE"));
-        result.add(linkTo(methodOn(ClienteController.class).findAll()).withRel("findAll").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).create(result)).withRel("create").withType("POST"));
-        result.add(linkTo(methodOn(ClienteController.class).update(result)).withRel("update").withType("PUT"));
-    }
-    public static void addHateoasLinks(ClienteVO result)
-    {
-        result.add(linkTo(methodOn(ClienteController.class).findById(result.getId())).withRel("findById").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).findByCpf(result.getCpf())).withRel("findByCpf").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).findByEmail(result.getEmail())).withRel("findByEmail").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).delete(result.getId())).withRel("delete").withType("DELETE"));
-        result.add(linkTo(methodOn(ClienteController.class).findAll()).withRel("findAll").withType("GET"));
-        result.add(linkTo(methodOn(ClienteController.class).create(result)).withRel("create").withType("POST"));
-        result.add(linkTo(methodOn(ClienteController.class).update(result)).withRel("update").withType("PUT"));
+        return ClientVOMapper.toVO(cliente);
     }
 
 
