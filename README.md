@@ -143,6 +143,38 @@ gablins
 
 Para facilitar o desenvolvimento e testes, o projeto utiliza **H2 Database** em memória.
 
+
+## 💾 Configuração do Banco de Dados
+
+Antes de executar, certifique-se de que o arquivo `src/main/resources/application.yml` (ou `.properties`) contenha as seguintes configurações para o **H2 Database**:
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:h2:file:C:/Users/gfeli/test
+    driver-class-name: org.h2.Driver
+    username: gabriel
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+```
+
+#### Nota: O caminho da URL no datasource.url aponta para um diretório local. Certifique-se de alterar a url na pasta ou altere o caminho para um diretório de sua preferência.
+``
+
+
+## 🌐 Acesso ao Banco de Dados (H2 Console)
+
+Após iniciar a aplicação, você pode acessar e gerenciar o banco de dados diretamente pelo seu navegador.
+
+### Passo a Passo:
+
+1. Abra o seu navegador e acesse:
+   `http://localhost:8080/h2-console`
+2. Insira o mesmo username configurado no spring.datasource.username
+
 ---
 
 ## ▶️ Como Executar o Projeto
@@ -161,6 +193,7 @@ git clone [https://github.com/Deceitful1/Bootcamp-deloitte](https://github.com/D
 
 ```bash
 cd Bootcamp-deloitte
+```
 
 ### 3. Execute o projeto
 
@@ -169,6 +202,8 @@ cd Bootcamp-deloitte
 ```
 Ou simplesmente Execute o código pela sua IDE.
 ---
+
+
 
 
 ## 👨‍💻 Autor
