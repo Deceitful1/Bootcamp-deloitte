@@ -51,6 +51,9 @@ O sistema possui as seguintes funcionalidades:
 - Buscar cliente por ID
 - Atualizar cliente
 - Deletar cliente
+- Buscar Cliente por CPF
+- Buscar Cliente por email.
+- Verificar se o Cliente já existe por email ou pelo cpf 
 
 ---
 
