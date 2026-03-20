@@ -1,8 +1,5 @@
 package com.gablins.DTOs;
 
-import Semana1.exceptions.InvalidCPFFormatException;
-import Semana1.exceptions.InvalidEmailFormatException;
-import com.gablins.entities.Cliente;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.ArrayList;

@@ -2,9 +2,7 @@ package com.gablins.entities;
 
 
 
-import Semana1.exceptions.InvalidCPFFormatException;
-import Semana1.exceptions.InvalidEmailFormatException;
-import com.gablins.DTOs.ClienteVO;
+
 import jakarta.persistence.*;
 
 import java.util.*;

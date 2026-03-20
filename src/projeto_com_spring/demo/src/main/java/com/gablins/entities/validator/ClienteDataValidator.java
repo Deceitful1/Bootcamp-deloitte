@@ -1,8 +1,9 @@
 package com.gablins.entities.validator;
 
 
-import Semana1.exceptions.InvalidCPFFormatException;
-import Semana1.exceptions.InvalidEmailFormatException;
+
+
+import com.gablins.exceptions.InvalidCPFFormatException;
 
 public class ClienteDataValidator {
 
@@ -21,7 +22,7 @@ public class ClienteDataValidator {
     {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         if (!email.matches(regex)) {
-            throw new InvalidEmailFormatException("Formato de email inválido!");
+            throw new InvalidCPFFormatException("Email invalido!");
         }
         return true;
     }

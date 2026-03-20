@@ -122,7 +122,7 @@ class ClienteServiceTest
     {
         ClienteVO data = mockClientVO();
         data.setId(1L);
-        when(clienteRepository.findById(1L)).thenReturn(Optional.of(ClientVOToEntityMapper.VOToObject(data)));
+        when(clienteRepository.existsById(1L)).thenReturn(true);
 
         clienteService.delete(1L);
         verify(clienteRepository, times(1)).deleteById(1L);
