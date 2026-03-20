@@ -25,7 +25,7 @@ btn.addEventListener("click", async (e) => {
     console.log("Status da resposta:", response.status);
     if (response.ok) {
         localStorage.setItem("usuarioLogado", JSON.stringify({emailOrCpf, password}));
-        window.location.href = "homepage.html"
+        window.location.href = "https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/homepage.html"
     }
     else
     {
