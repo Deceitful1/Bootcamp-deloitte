@@ -110,7 +110,7 @@
                 if (response.status === 201) {
                     alert("Cliente com sucesso!");
                     localStorage.setItem("usuarioLogado", JSON.stringify(dados));
-                    window.location.href = "login.html";
+                    window.location.href = "http://localhost:63342/Projetos%20com%20java/src/projeto_com_spring/demo/src/main/resources/static/login.html?_ijt=2dunlglvb1kvjl39ptaq82mkng";
 
                 } else {
                     const error = await response.text();

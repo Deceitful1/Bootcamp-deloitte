@@ -29,10 +29,10 @@ function exibirDadosEstaticos(usuario) {
     card.innerHTML = `
         <h3>Meu Perfil</h3>
         <hr>
-        <p><strong>Nome:</strong> ${usuario.nome}</p>
-        <p><strong>E-mail:</strong> ${usuario.email}</p>
-        <p><strong>Endereço:</strong> ${usuario.endereco || "Não informado"}</p>
-        <p><strong>CPF:</strong> ${usuario.cpf}</p>
+        <p><strong>Nome: </strong>  ${usuario.nome}</p>
+        <p><strong>E-mail: </strong> ${usuario.email}</p>
+        <p><strong>Endereço: </strong> ${usuario.endereco || "Não informado"}</p>
+        <p><strong>CPF: </strong> ${usuario.cpf}</p>
         <div style="margin-top: 20px;">
             <button id="edit-btn">Editar</button>
             <button id="delete-btn" style="background-color: #dc3545; color: white;">Excluir Conta</button>
@@ -53,13 +53,13 @@ function exibirFormularioEdicao(usuario) {
     card.innerHTML = `
         <h3>Editar Informações</h3>
         <hr>
-        <label>Nome:</label>
+        <label>Nome: </label>
         <input type="text" id="input-nome" value="${usuario.nome}">
-        <label>E-mail:</label>
+        <label>E-mail: </label>
         <input type="email" id="input-email" value="${usuario.email}">
-        <label>Endereço:</label>
+        <label>Endereço: </label>
         <input type="text" id="input-endereco" value="${usuario.endereco || ""}">
-        <p><strong>CPF:</strong> ${usuario.cpf} (Não editável)</p>
+        <p><strong>CPF: </strong> ${usuario.cpf} (Não editável)</p>
         <div style="margin-top: 15px;">
             <button id="save-btn">Salvar Alterações</button>
             <button id="cancel-btn" style="background-color: #6c757d; color: white;">Cancelar</button>
