@@ -1,0 +1,152 @@
+* {
+    background-color: #FFFFFE;
+    font-family: "poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+.links
+{
+    color: #007bff;
+}
+
+
+html, body {
+    height: 100%;
+
+}
+
+#main-banner-container-h1 {
+    font-weight: bold;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 90vh;
+    padding: 2rem;
+
+}
+
+.main-banner-container, .form-container {
+    flex: 1;
+}
+
+.main-banner-container {
+    display: flex;
+    flex:1;
+    position: relative;
+}
+
+#main-banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+
+.form-container
+{
+
+}
+.form-container {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFE; /* Garante o fundo branco */
+}
+
+.form-container div {
+    display: flex;
+    flex-direction: column; /* Coloca Label em cima do Input */
+    width: 100%;           /* Força a div a ocupar a largura da coluna */
+    margin-bottom: 1.2rem;  /* Espaçamento entre os campos */
+}
+
+.form-container label {
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+    display: block;        /* Garante que a label se comporte como bloco */
+}
+
+.form-container input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.form-container button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.form-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-container div {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.form-container label {
+    font-weight: bold;
+    margin-left: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+
+.form-container input {
+    padding: 1rem;
+}
+#welcome-h1
+{
+z-index: 10;
+    position: relative;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+#register-title
+{
+    font-weight: bold;
+    text-align: center;
+}
+.required
+{
+    color: #f10909;
+}
+
+.profile-card
+{
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    justify-content: center;
+    width: 5000px;
+}
+
+
+
+
+
+
+
+

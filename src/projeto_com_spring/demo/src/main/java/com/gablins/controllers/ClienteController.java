@@ -1,14 +1,20 @@
 package com.gablins.controllers;
 
 import com.gablins.DTOs.ClienteVO;
+import com.gablins.entities.Login;
+import com.gablins.entities.validator.ClienteDataValidator;
+import com.gablins.entities.validator.LoginDataValidator;
 import com.gablins.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"*", "http://localhost:63342"})
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController
@@ -16,6 +22,27 @@ public class ClienteController
 
     @Autowired
     private ClienteService clienteService;
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody Login login) {
+        ClienteVO cliente = null;
+
+        if (LoginDataValidator.isEmail(login.getLogin())) {
+            cliente = clienteService.findByEmail(login.getLogin());
+        } else if (LoginDataValidator.isCPF(login.getLogin())) {
+            cliente = clienteService.findByCpf(login.getLogin());
+        }
+
+        if (cliente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou formato de login inválido.");
+        }
+
+        if (cliente.getSenha().equals(login.getPassword())) {
+            return ResponseEntity.ok(cliente);
+        }
+
+        return ResponseEntity.status(401).body("Senha incorreta.");
+    }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public ResponseEntity<List<ClienteVO>> findAll()
@@ -32,7 +59,7 @@ public class ClienteController
     @PutMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public ResponseEntity<ClienteVO> update(@RequestBody ClienteVO clienteVO)
     {
-        return ResponseEntity.status(204).body(clienteService.update(clienteVO));
+        return ResponseEntity.status(201).body(clienteService.update(clienteVO));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
@@ -63,3 +90,4 @@ public class ClienteController
 
 
 }
+
