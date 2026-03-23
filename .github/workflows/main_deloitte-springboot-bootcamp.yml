@@ -26,7 +26,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-        working-directory: .src/projeto/projeto_com_spring/demo
+        working-directory: src/projeto/projeto_com_spring/demo
 
 
       - name: Upload artifact for deployment job
