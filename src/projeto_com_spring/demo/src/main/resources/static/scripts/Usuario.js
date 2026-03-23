@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const jsonParse = JSON.parse(dados);
         const termo = jsonParse.emailOrCpf;
 
-        let response = await fetch(`http://localhost:8080/clientes?email=${termo}`);
+        let response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?email=${termo}`);
         if (response.status === 404) {
-            response = await fetch(`http://localhost:8080/clientes?cpf=${termo}`);
+            response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?${termo}`);
         }
 
         if (response.ok) {
@@ -82,7 +82,7 @@ async function salvarEdicao(usuarioOriginal) {
         senha: usuarioOriginal.senha
     };
 
-    const response = await fetch(`http://localhost:8080/clientes`, {
+    const response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData)
@@ -102,7 +102,7 @@ async function salvarEdicao(usuarioOriginal) {
 
 async function deletarConta(id) {
     if (confirm("Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.")) {
-        const response = await fetch(`http://localhost:8080/clientes/${id}`, {
+        const response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes/${id}`, {
             method: "DELETE"
         });
 
