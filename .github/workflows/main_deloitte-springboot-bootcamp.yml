@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'src/projeto_com_spring/target/*.jar'
+          path: 'src/projeto_com_spring/demo/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
