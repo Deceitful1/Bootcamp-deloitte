@@ -55,7 +55,7 @@
         const dados = sendData();
         try
         {
-            const response = await fetch(`http://localhost:8080/clientes?cpf=${cpfInput.value}`, {
+            const response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?cpf=${cpfInput.value}`, {
                 method: "GET",
                 headers:{
                     "Content-Type": "application/json",
@@ -77,7 +77,7 @@
 
         try
         {
-            const response = await fetch(`http://localhost:8080/clientes?email=${dados.email}`, {
+            const response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?email=${dados.email}`, {
                 method: "GET",
                 headers:{
                     "Content-Type": "application/json",
@@ -96,7 +96,7 @@
         }
 
         try {
-            const response =  await fetch("http://localhost:8080/clientes", {
+            const response =  await fetch("https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes", {
                     method: "POST",
                     headers:{
                         "Content-Type": "application/json",

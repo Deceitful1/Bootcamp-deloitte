@@ -7,7 +7,7 @@ btn.addEventListener("click", async (e) => {
     var password = document.getElementById("input-password").value;
     var emailOrCpf = document.getElementById("input-email-cpf").value;
 
-    const response = await fetch("http://localhost:8080/clientes/auth/login", {
+    const response = await fetch("https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes/auth/login", {
         method: "POST",
         headers:
             {
