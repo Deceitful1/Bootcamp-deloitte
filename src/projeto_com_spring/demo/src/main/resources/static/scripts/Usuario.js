@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         let response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?email=${termo}`);
         if (response.status === 404) {
-            response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?${termo}`);
+            response = await fetch(`https://deloitte-springboot-bootcamp-bngvdfg2ewczdzeb.brazilsouth-01.azurewebsites.net/clientes?cpf=${termo}`);
         }
 
         if (response.ok) {
