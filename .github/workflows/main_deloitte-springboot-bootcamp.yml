@@ -26,7 +26,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-        working-directory: D:\gfeli\Projetos com java\Deloitte\src\projeto_com_spring\demo\pom.xml
+        working-directory: .src/projeto/projeto_com_spring/demo
 
 
       - name: Upload artifact for deployment job
